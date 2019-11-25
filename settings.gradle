@@ -1,2 +1,3 @@
-include ':StartActivity'
+include ':StartActivityComponent'
 rootProject.name='Android Basic Sample'
+include ':CustomView'
