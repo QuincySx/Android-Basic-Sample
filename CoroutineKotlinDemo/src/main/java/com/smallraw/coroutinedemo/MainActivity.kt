@@ -16,10 +16,16 @@ class MainActivity : AppCompatActivity() {
     fun onClick(v: View?) {
         val clazz = when (v?.id) {
             R.id.btnStartCoroutine -> {
+                // 启动写成示例
                 StartCoroutinesActivity::class.java
             }
             R.id.btnToggleCoroutine -> {
+                // 切换协程示例
                 ToggleCoroutinesActivity::class.java
+            }
+            R.id.btnCiroutinersCooperationActivity -> {
+                // 协程结构化以及多协程协作配合
+                CiroutinersCooperationActivity::class.java
             }
             else -> {
                 MainActivity::class.java
