@@ -26,9 +26,14 @@ class MainActivity : AppCompatActivity() {
             R.id.btnCiroutinersCooperationActivity -> {
                 // 协程结构化以及多协程协作配合
                 CiroutinersCooperationActivity::class.java
-            }R.id.btnCancelCoroutinesActivity -> {
-                // 协程结构化以及多协程协作配合
+            }
+            R.id.btnCancelCoroutinesActivity -> {
+                // 取消协程以及协程超时
                 CancelCoroutinesActivity::class.java
+            }
+            R.id.btnCoroutineContextActivity -> {
+                // 协程上下文与线程调度器
+                CoroutineContextActivity::class.java
             }
             else -> {
                 MainActivity::class.java
