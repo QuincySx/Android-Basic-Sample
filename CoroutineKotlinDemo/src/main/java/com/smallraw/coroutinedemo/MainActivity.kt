@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
             R.id.btnCiroutinersCooperationActivity -> {
                 // 协程结构化以及多协程协作配合
                 CiroutinersCooperationActivity::class.java
+            }R.id.btnCancelCoroutinesActivity -> {
+                // 协程结构化以及多协程协作配合
+                CancelCoroutinesActivity::class.java
             }
             else -> {
                 MainActivity::class.java
