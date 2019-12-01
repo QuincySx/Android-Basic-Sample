@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CoroutineContextActivity"></activity>
+        <activity android:name=".CoroutineScopeActivity"></activity>
+        <activity android:name=".CoroutineContextActivity" />
         <activity android:name=".CancelCoroutinesActivity" />
         <activity android:name=".CiroutinersCooperationActivity" />
         <activity android:name=".ToggleCoroutinesActivity" />

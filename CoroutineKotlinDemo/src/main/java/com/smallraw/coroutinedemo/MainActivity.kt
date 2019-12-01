@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 打印协程名称
+        System.setProperty("kotlinx.coroutines.debug", "on")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             R.id.btnCoroutineContextActivity -> {
                 // 协程上下文与线程调度器
                 CoroutineContextActivity::class.java
+            }
+            R.id.btnCoroutineScopeActivity -> {
+                // 协程协程作用域
+                CoroutineScopeActivity::class.java
             }
             else -> {
                 MainActivity::class.java
