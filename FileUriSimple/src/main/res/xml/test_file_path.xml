@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+
+    // val newFile2 = File(getExternalFilesDir(null), "test_child/cache/images/abc.jpg")
+    // 会把 File 路径 /storage/emulated/0/Android/data/com.smallraw.androidbasic.fileurisimple/files/test_child/cache/images/abc.jpg
+    // 变为 content://com.smallraw.androidbasic.fileurisimple.fileProvider/images/images/abc.jpg
+    // 规则是把 {app.externalFilesDir}/test_child/cache/images/abc.jpg 隐藏成 {FileProvider.fileProvider}/images/images/abc.jpg
+    // 效果是将 test_child/cache/ 使用 images 来替换
+    // 不能直接写 cache/ 跨越一个目录会失效的
+    // 直接隐藏包名 path 可以直接使用 . 或 /
+    <external-files-path
+        name="external-files"
+        path="test_child/cache/" />
+    // external-cache-path external-files-path 代表不同的 context.xxxxxdir 路径
+    <external-cache-path
+        name="external-cache"
+        path="." />
+</paths>

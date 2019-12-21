@@ -41,6 +41,10 @@ class MainActivity : AppCompatActivity() {
                 // 协程协程作用域
                 CoroutineScopeActivity::class.java
             }
+            R.id.btnFlowActivity -> {
+                // 协程协程作用域
+                FlowActivity::class.java
+            }
             else -> {
                 MainActivity::class.java
             }
