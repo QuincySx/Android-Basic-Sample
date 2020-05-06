@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
                 // 协程协程作用域
                 FlowActivity::class.java
             }
+            R.id.btnExceptionPropagation -> {
+                // 协程协程作用域
+                ExceptionPropagationActivity::class.java
+            }
             else -> {
                 MainActivity::class.java
             }

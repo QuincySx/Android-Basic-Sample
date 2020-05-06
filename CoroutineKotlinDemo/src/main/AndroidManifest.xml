@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FlowActivity"></activity>
+        <activity android:name=".ExceptionPropagationActivity"/>
+        <activity android:name=".FlowActivity" />
         <activity android:name=".CoroutineScopeActivity" />
         <activity android:name=".CoroutineContextActivity" />
         <activity android:name=".CancelCoroutinesActivity" />
