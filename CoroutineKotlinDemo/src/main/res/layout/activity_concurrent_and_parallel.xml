@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConcurrentAndParallelActivity">
+
+    <ScrollView
+        android:id="@+id/svConsole"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/svConsole">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnSingleConcurrentNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境协程网络并发测试" />
+
+            <Button
+                android:id="@+id/btnSingleConcurrentCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境协程计算并发测试" />
+
+            <Button
+                android:id="@+id/btnMultipleConcurrentNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境协程网络并发测试" />
+
+            <Button
+                android:id="@+id/btnMultipleConcurrentCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境协程计算并发测试" />
+
+            <!-- 并行测试 -->
+            <Button
+                android:id="@+id/btnSingleParallelSingleNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境单线程异步协程网络并行测试" />
+
+            <Button
+                android:id="@+id/btnSingleParallelSingleCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境单线程异步协程计算并行测试" />
+
+            <Button
+                android:id="@+id/btnSingleParallelMultipleNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境多线程异步协程网络并行测试" />
+
+            <Button
+                android:id="@+id/btnSingleParallelMultipleCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单线程环境多线程异步协程计算并行测试" />
+
+            <!--  -->
+
+            <Button
+                android:id="@+id/btnMultipleParallelSingleNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境单线程异步协程网络并行测试" />
+
+            <Button
+                android:id="@+id/btnMultipleParallelSingleCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境单线程异步协程计算并行测试" />
+
+            <Button
+                android:id="@+id/btnMultipleParallelMultipleNetWork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境多线程异步协程网络并行测试" />
+
+            <Button
+                android:id="@+id/btnMultipleParallelMultipleCalculationTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="多线程环境多线程异步协程计算并行测试" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
