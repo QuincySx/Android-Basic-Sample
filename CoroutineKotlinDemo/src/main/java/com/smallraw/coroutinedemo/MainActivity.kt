@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
                 // 协程协程作用域
                 ExceptionPropagationActivity::class.java
             }
+            R.id.btnConcurrentAndParallel -> {
+                ConcurrentAndParallelActivity::class.java
+            }
             else -> {
                 MainActivity::class.java
             }

@@ -3,7 +3,9 @@ package com.smallraw.coroutinedemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.coroutines.*
-import kotlin.math.log
+import java.math.BigInteger
+import java.util.*
+import kotlin.system.measureTimeMillis
 
 class ToggleCoroutinesActivity : AppCompatActivity() {
 
@@ -18,6 +20,7 @@ class ToggleCoroutinesActivity : AppCompatActivity() {
         toggleFun6()
         toggleFun7()
         toggleFun8()
+        toggleFun9()
     }
 
     private fun toggleFun1() {
@@ -145,6 +148,12 @@ class ToggleCoroutinesActivity : AppCompatActivity() {
         return "我是返回值"
     }
 
+    private fun asyncCalculationFunction(): Long {
+        return measureTimeMillis {
+            BigInteger(1500, Random()).nextProbablePrime().toLong()
+        }
+    }
+
     // 启动很多个协程,类似线程池执行多个任务
     private fun toggleFun8() {
         GlobalScope.launch {
@@ -153,5 +162,30 @@ class ToggleCoroutinesActivity : AppCompatActivity() {
                 delay(500L)
             }
         }
+    }
+
+    // 并行与并发任务
+    private fun toggleFun9() = runBlocking {
+        val time1 = measureTimeMillis {
+            val async1 = async { asyncCalculationFunction() }
+            val async2 = async { asyncCalculationFunction() }
+            log("toggleFun9 The answer is ${async1.await()}  ${async2.await()}")
+        }
+        log("toggleFun9 Completed 并发 time1 in $time1 ms")
+
+        val time2 = measureTimeMillis {
+            val async1 = async(Dispatchers.IO) { asyncCalculationFunction() }
+            val async2 = async(Dispatchers.IO) { asyncCalculationFunction() }
+            log("toggleFun9 The answer is ${async1.await()}  ${async2.await()}")
+        }
+        log("toggleFun9 Completed 并行 time2 in $time2 ms")
+
+        val time3 = measureTimeMillis {
+            // 两个 1000ms 的挂起操作,模仿网络请求 IO 挂起
+            val async1 = async { asyncFunction() }
+            val async2 = async { asyncFunction() }
+            log("toggleFun9 The answer is ${async1.await()}  ${async2.await()}")
+        }
+        log("toggleFun9 Completed 并发 time3 in $time3 ms")
     }
 }
