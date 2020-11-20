@@ -1,11 +1,15 @@
 package com.smallraw.androidbasicsample
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
 //            explicitStart1()
 //            explicitStart2()
-            explicitStart3()
+//            explicitStart3()
+            explicitStart4()
         }
 
         btnImplicit.setOnClickListener {
@@ -86,5 +91,22 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "False", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            Log.d("MainActivity", activityResult.data?.getStringExtra("EXT").toString())
+        }
+
+    private fun explicitStart4() {
+        launcher.launch(Intent(this, Main3Activity::class.java))
+
+        // 设置回调
+        val launcher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                Toast.makeText(this, "result: granted", Toast.LENGTH_LONG).show()
+            }
+        }
+        launcher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
