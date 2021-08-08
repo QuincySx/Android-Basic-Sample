@@ -10,9 +10,9 @@ import com.sl.utakephoto.exception.TakeException
 import com.sl.utakephoto.manager.ITakePhotoResult
 import com.sl.utakephoto.manager.UTakePhoto
 import com.smallraw.androidbasic.fileurisimple.R
+import com.smallraw.androidbasic.fileurisimple.databinding.ActivityTakePhotoBinding
 import com.smallraw.androidbasic.fileurisimple.utils.copySteam
 import com.smallraw.androidbasic.fileurisimple.utils.getNewFile
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -21,12 +21,14 @@ import kotlin.random.Random
 
 
 class TakePhotoActivity : AppCompatActivity() {
-
+    private val binding by lazy {
+        ActivityTakePhotoBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_take_photo)
+        setContentView(binding.root)
 
-        btnTakePhoto.setOnClickListener {
+        binding.btnTakePhoto.setOnClickListener {
             UTakePhoto.with(this).openCamera().build(object : ITakePhotoResult {
                 override fun takeFailure(ex: TakeException?) {
 

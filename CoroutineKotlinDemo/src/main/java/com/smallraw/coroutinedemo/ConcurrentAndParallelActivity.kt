@@ -1,8 +1,8 @@
 package com.smallraw.coroutinedemo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_concurrent_and_parallel.*
+import androidx.appcompat.app.AppCompatActivity
+import com.smallraw.coroutinedemo.databinding.ActivityConcurrentAndParallelBinding
 import kotlinx.coroutines.*
 import java.math.BigInteger
 import java.net.URL
@@ -13,57 +13,63 @@ import kotlin.system.measureTimeMillis
 private val SingleDispatcher = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
 
 class ConcurrentAndParallelActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+    private val binding by lazy { ActivityConcurrentAndParallelBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_concurrent_and_parallel)
-        // ======================
-        btnSingleConcurrentNetWork.setOnClickListener {
-            singleConcurrentNetWorkTask()
-        }
-        btnSingleConcurrentCalculationTask.setOnClickListener {
-            singleConcurrentCalculationTask()
-        }
-        btnMultipleConcurrentNetWork.setOnClickListener {
-            multipleConcurrentNetWorkTask()
-        }
-        btnMultipleConcurrentCalculationTask.setOnClickListener {
-            multipleConcurrentCalculationTask()
-        }
-        // ======================
-        btnSingleParallelSingleNetWork.setOnClickListener {
-            singleParallelSingleNetWorkTask()
-        }
-        btnSingleParallelSingleCalculationTask.setOnClickListener {
-            singleParallelSingleCalculationTask()
-        }
-        btnSingleParallelMultipleNetWork.setOnClickListener {
-            singleParallelMultipleNetWorkTask()
-        }
-        btnSingleParallelMultipleCalculationTask.setOnClickListener {
-            singleParallelMultipleCalculationTask()
-        }
-        // ======================
-        btnMultipleParallelSingleNetWork.setOnClickListener {
-            multipleParallelSingleNetWorkTask()
-        }
-        btnMultipleParallelSingleCalculationTask.setOnClickListener {
-            multipleParallelSingleCalculationTask()
-        }
-        btnMultipleParallelMultipleNetWork.setOnClickListener {
-            multipleParallelMultipleNetWorkTask()
-        }
-        btnMultipleParallelMultipleCalculationTask.setOnClickListener {
-            multipleParallelMultipleCalculationTask()
+        with(binding) {
+            setContentView(binding.root)
+            // ======================
+            btnSingleConcurrentNetWork.setOnClickListener {
+                singleConcurrentNetWorkTask()
+            }
+            btnSingleConcurrentCalculationTask.setOnClickListener {
+                singleConcurrentCalculationTask()
+            }
+            btnMultipleConcurrentNetWork.setOnClickListener {
+                multipleConcurrentNetWorkTask()
+            }
+            btnMultipleConcurrentCalculationTask.setOnClickListener {
+                multipleConcurrentCalculationTask()
+            }
+            // ======================
+            btnSingleParallelSingleNetWork.setOnClickListener {
+                singleParallelSingleNetWorkTask()
+            }
+            btnSingleParallelSingleCalculationTask.setOnClickListener {
+                singleParallelSingleCalculationTask()
+            }
+            btnSingleParallelMultipleNetWork.setOnClickListener {
+                singleParallelMultipleNetWorkTask()
+            }
+            btnSingleParallelMultipleCalculationTask.setOnClickListener {
+                singleParallelMultipleCalculationTask()
+            }
+            // ======================
+            btnMultipleParallelSingleNetWork.setOnClickListener {
+                multipleParallelSingleNetWorkTask()
+            }
+            btnMultipleParallelSingleCalculationTask.setOnClickListener {
+                multipleParallelSingleCalculationTask()
+            }
+            btnMultipleParallelMultipleNetWork.setOnClickListener {
+                multipleParallelMultipleNetWorkTask()
+            }
+            btnMultipleParallelMultipleCalculationTask.setOnClickListener {
+                multipleParallelMultipleCalculationTask()
+            }
         }
     }
 
     private fun addLine(msg: String) {
         launch {
-            tvLog.append("${msg}\n")
-            val offset = tvLog.lineCount * tvLog.lineHeight
-            if (offset > tvLog.height) {
-                tvLog.scrollTo(0, offset - tvLog.height)
+            with(binding) {
+                tvLog.append("${msg}\n")
+                val offset = tvLog.lineCount * tvLog.lineHeight
+                if (offset > tvLog.height) {
+                    tvLog.scrollTo(0, offset - tvLog.height)
+                }
             }
         }
     }

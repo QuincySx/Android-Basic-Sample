@@ -7,18 +7,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.smallraw.androidbasicsample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
+    private val mBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(mBinding.root)
 
-        btnExplicit.setOnClickListener {
+        mBinding.btnExplicit.setOnClickListener {
             // 启动原理，根据包名和 Activity 的类名启动
 
 //            explicitStart1()
@@ -27,11 +28,11 @@ class MainActivity : AppCompatActivity() {
             explicitStart4()
         }
 
-        btnImplicit.setOnClickListener {
+        mBinding.btnImplicit.setOnClickListener {
             //            implicitStart1()
             checkImplicitStart()
         }
-        btnLink.setOnClickListener {
+        mBinding.btnLink.setOnClickListener {
 //            val intent1 = Intent(Intent.ACTION_VIEW, Uri.parse("one://openview.com"))
             val intent1 = Intent(Intent.ACTION_VIEW, Uri.parse("two://openview.com"))
             startActivity(intent1)
