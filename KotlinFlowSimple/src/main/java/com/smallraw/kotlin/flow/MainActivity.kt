@@ -3,8 +3,7 @@ package com.smallraw.kotlin.flow
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.jraska.console.Console
 import com.smallraw.kotlin.flow.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collect
@@ -31,9 +30,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        lifecycleScope.launchWhenStarted {
-            viewModel.event.collect {
-                Console.writeLine(it)
+
+        lifecycleScope.launch {
+            /**
+             * 在生命周期进入 STARTED 状态时从数据流收集数据，在 STOPED 状态时「挂起」协程
+             * 在 View 转为 DESTROYED 状态时取消数据流的收集操作「停止」协程。
+             */
+            lifecycleScope.launchWhenResumed {
+//                viewModel.event
+//                    .collect {
+//                        Console.writeLine(it)
+//                    }
+            }
+
+            /**
+             * 推荐用法，简单安全。
+             */
+            viewModel.event
+                /**
+                 * 在生命周期进入 STARTED 状态时开始重复任务，在 STOPED 状态时「停止」协程
+                 */
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    Console.writeLine(it)
+                }
+
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // 在生命周期进入 STARTED 状态时开始重复任务，在 STOPED 状态时停止
+                // 对 expensiveObject 进行操作
             }
         }
     }

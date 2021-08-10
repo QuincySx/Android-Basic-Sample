@@ -5,21 +5,24 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 
+/**
+ * 变换操作符
+ */
 fun main() {
 //    flowMap()
 //    flowFilter()
 //    flowFlatMapConcat()
 //    flowTransform()
 //    flowTake()
+//    flowDrop()
 //    flowDebounce()
 //    flowRetry()
 //    flowOnEach()
 //    flowCombine()
 //    flowZip()
 //    flowDistinctUntilChanged()
-//    flowConflate()
 //    flowScan()
-    flowBuffer()
+    flowFlattenMerge()
 }
 
 /**
@@ -102,10 +105,22 @@ private fun flowTransform() {
 private fun flowTake() {
     runBlocking {
         flowOf("1", "2", "3", "4", "5")
-            .take(2)
+            .take(2) // 只取前两个
             .collect { println(it) }
     }
 }
+
+/**
+ * 跳过操作符
+ */
+private fun flowDrop() {
+    runBlocking {
+        flowOf("1", "2", "3", "4", "5")
+            .drop(2) // 跳过前两个
+            .collect { println(it) }
+    }
+}
+
 
 /**
  * 防止重复，一定时间内只能发一次
@@ -127,6 +142,28 @@ private fun flowDebounce() {
             .collect { println(it) }
     }
 }
+
+/**
+ * 去重操作符
+ */
+private fun flowDistinctUntilChanged() {
+    runBlocking {
+        println("distinctUntilChanged")
+        flowOf("1", "1", "2", "2", "3")
+            .distinctUntilChanged()
+            .collect {
+                println(it)
+            }
+
+        println("distinctUntilChangedBy")
+        flowOf("11", "12", "13", "23", "24")
+            .distinctUntilChangedBy { it.first() }
+            .collect {
+                println(it)
+            }
+    }
+}
+
 
 /**
  * 合并操作符：压缩两个流
@@ -169,42 +206,18 @@ private fun flowZip() {
 }
 
 /**
- * 去重操作符
+ * 合并多个 flow，（展平流）
  */
-private fun flowDistinctUntilChanged() {
+private fun flowFlattenMerge() {
     runBlocking {
-        println("distinctUntilChanged")
-        flowOf("1", "1", "2", "2", "3")
-            .distinctUntilChanged()
-            .collect {
-                println(it)
-            }
-
-        println("distinctUntilChangedBy")
-        flowOf("11", "12", "13", "23", "24")
-            .distinctUntilChangedBy { it.first() }
-            .collect {
-                println(it)
-            }
-    }
-}
-
-/**
- * 略过中间的值，只处理最新的数据
- * 可以接受多个
- */
-private fun flowConflate() {
-    runBlocking {
-        flowOf("1", "2", "3", "4", "5")
-            .onEach { delay(1000) }
+        val flows = flowOf(flowOf(1, 2, 3), flowOf("A", "B", "C"))
+        flows.flattenMerge()
             .conflate()
             .collect {
-                delay(3000)
                 println(it)
             }
     }
 }
-
 
 /**
  * 循环、延时发送
@@ -261,20 +274,6 @@ private fun flowScan() {
                 return@scan accumulator + value
             }
             .collect { println(it) }
-    }
-}
-
-/**
- * 累计求和等与上下文关联的操作
- */
-private fun flowBuffer() {
-    runBlocking {
-        flowOf(1, 2, 3, 4, 5)
-            .onEach { delay(1000) }
-            .buffer()
-            .collect {
-                delay(2000)
-                println(it) }
     }
 }
 

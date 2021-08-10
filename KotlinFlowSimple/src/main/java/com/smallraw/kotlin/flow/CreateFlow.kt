@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 
+/**
+ * 创建流的方式
+ */
 fun main() {
     runBlocking {
         createFlowFun2().collect { println(it) }

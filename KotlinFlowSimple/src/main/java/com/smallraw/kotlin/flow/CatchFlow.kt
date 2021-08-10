@@ -4,6 +4,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 
+/**
+ * 流的异常捕获 以及 流的状态监听
+ */
 fun main() {
 //    catch1()
 //    catch2()

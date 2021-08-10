@@ -19,13 +19,13 @@ private fun flowOn() {
                 println("map1：Current Thread: ${Thread.currentThread().name}")
                 it
             }
-            // 只能切换到上一个线程环境，有些像 Rxjava.subscribeOn()
+            // 只能切换从此处到流的发送源或上一个 flowOn 的线程环境，有些像 Rxjava.subscribeOn()。
             .flowOn(Dispatchers.IO)
             .map {
                 println("map2：Current Thread: ${Thread.currentThread().name}")
                 it
             }
-            // 可以切换多次
+            // flowOn 可以切换多次并不想 Rxjava.subscribeOn() 那样只能运行一次。
             .flowOn(newSingleThreadContext("MyOwnThread"))
             .collect {
                 // 线程跟随外部 Scope 的线程

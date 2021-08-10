@@ -3,6 +3,9 @@ package com.smallraw.androidbasicsample.livedata
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 
+/**
+ * 消费流的方式
+ */
 fun main() {
     collectNormal()
 }

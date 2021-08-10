@@ -1,14 +1,12 @@
 package com.smallraw.androidbasicsample.livedata
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 fun main() {
 //    sharedFlowNormal()
-    sharedShareIn()
+//    sharedShareIn()
+    sharedShareInWhileSubscribed()
 }
 
 /**
@@ -58,8 +56,14 @@ private fun sharedFlowNormal() {
 private fun sharedShareIn() {
     /**
      * 通过 scope 设置热流创建的线程环境。
-     * 通过 started 可以设置发送的状况。 SharingStarted.Eagerly 立马就开始运行热流，SharingStarted.Lazily 等订阅在运行热流，SharingStarted.WhileSubscribed() 自定义延迟多久热流生效。
+     * 通过 started 可以设置发送的状况。 SharingStarted.Eagerly 立马就开始运行热流，SharingStarted.Lazily 等有订阅者消费才会运行热流，SharingStarted.WhileSubscribed() 自定义。
      * 通过 replay 设置针对新订阅者重新发送之前已发出的数据项数目。
+     */
+    /**
+     * SharingStarted.WhileSubscribed( 可以自定义等多长时间没人订阅自动暂停热流。
+     *    stopTimeoutMillis 最后一个订阅者消失时，多长时间后热流将停止。默认是 0。
+     *    replayExpirationMillis 当最后一个订阅者消失，缓存存在多少时间。默认是 永远不。
+     * )
      */
     val flow = flowOf(1, 2, 3, 4, 5, 6, 7).onEach { delay(100) }
         .shareIn(CoroutineScope(Dispatchers.IO), SharingStarted.Eagerly)
@@ -76,4 +80,48 @@ private fun sharedShareIn() {
     }
 
     Thread.sleep(5 * 1000)
+}
+
+private fun sharedShareInWhileSubscribed() {
+    /**
+     * SharingStarted.WhileSubscribed() 可以自定义等多长时间没人订阅自动取消。
+     */
+    val flow by lazy {
+        flowOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).onEach { delay(100) }
+            .shareIn(
+                CoroutineScope(Dispatchers.IO),
+                SharingStarted.WhileSubscribed(500)
+            )
+    }
+
+    runBlocking {
+        try {
+            delay(600)
+            withTimeout(500) {
+                flow
+                    .onSubscription { println("onSubscription") }
+                    .onStart { println("onStart") }
+                    .onCompletion { println("onCompletion") }
+                    .collect {
+                        println(it)
+                    }
+            }
+        } catch (e: Exception) {
+        }
+    }
+
+
+    runBlocking {
+        delay(1000)
+        /**
+         * 每次重新订阅都会重新执行
+         */
+        flow
+            .onSubscription { println("onSubscription") }
+            .onStart { println("onStart") }
+            .onCompletion { println("onCompletion") }
+            .collect {
+                println(it)
+            }
+    }
 }
